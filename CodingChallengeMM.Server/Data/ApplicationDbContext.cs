@@ -10,6 +10,7 @@
         {
         }
 
+        public DbSet<CustomerRequest> CustomerRequests { get; set; }
         public DbSet<Book> Books { get; set; }
     }
 }
