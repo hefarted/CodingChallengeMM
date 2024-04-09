@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
 using CodingChallengeMM.Server.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CodingChallengeMM.Server.Controllers
 {
@@ -14,10 +15,14 @@ namespace CodingChallengeMM.Server.Controllers
     [ApiController]
     public class CustomerRequestsController : ControllerBase
     {
+
+        private readonly IEmailDomainService _emailDomainService;
+        private string url = "https://www.google.com/";
         private readonly ApplicationDbContext _context;
 
-        public CustomerRequestsController(ApplicationDbContext context)
+        public CustomerRequestsController(ApplicationDbContext context , IEmailDomainService emailDomainService)
         {
+            _emailDomainService = emailDomainService;
             _context = context;
         }
 
@@ -76,12 +81,38 @@ namespace CodingChallengeMM.Server.Controllers
         // POST: api/CustomerRequests
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CustomerRequest>> PostCustomerRequest(CustomerRequest customerRequest)
+        public ActionResult<string> PostCustomerRequest(CustomerRequestCreateModel request)
         {
-            _context.CustomerRequests.Add(customerRequest);
-            await _context.SaveChangesAsync();
+            if (_emailDomainService.IsEmailDomainBlacklisted(request.Email))
+            {
+                return BadRequest(new { Message = "The email's domain is blacklisted and cannot be processed." });
+            }
+            var existingRequest = _context.CustomerRequests
+                    .FirstOrDefault(cr => cr.FirstName == request.FirstName && cr.LastName == request.LastName && cr.DateOfBirth == request.DateOfBirth);
 
-            return CreatedAtAction("GetCustomerRequest", new { id = customerRequest.Id }, customerRequest);
+            if (existingRequest != null)
+            {
+                return Ok(url);
+            }
+
+            var customerRequest = new CustomerRequest
+            {
+                AmountRequired = request.AmountRequired,
+                Term = request.Term,
+                Title = request.Title,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                DateOfBirth = request.DateOfBirth,
+                Mobile = request.Mobile,
+                Email = request.Email
+                // Id is auto-generated, so it's not set here
+            };
+           
+            _context.CustomerRequests.Add(customerRequest);
+            _context.SaveChanges();
+
+            return Ok(url);
+            //return CreatedAtAction("GetCustomerRequest", new { id = customerRequest.Id }, customerRequest);
         }
 
         // DELETE: api/CustomerRequests/5
