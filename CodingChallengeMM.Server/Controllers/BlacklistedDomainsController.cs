@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
-using CodingChallengeMM.Server.Model;
+using CodingChallengeMM.Server.Entities;
 
 namespace CodingChallengeMM.Server.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace CodingChallengeMM.Server.Model
+﻿namespace CodingChallengeMM.Server.Interfaces
 {
     public interface IEmailDomainService
     {

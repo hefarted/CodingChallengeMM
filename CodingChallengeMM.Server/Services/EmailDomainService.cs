@@ -1,7 +1,8 @@
 ﻿using CodingChallengeMM.Server.Data;
+using CodingChallengeMM.Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace CodingChallengeMM.Server.Model
+namespace CodingChallengeMM.Server.Services
 {
     public class EmailDomainService : IEmailDomainService
     {
@@ -23,5 +24,5 @@ namespace CodingChallengeMM.Server.Model
         }
 
     }
-    
+
 }

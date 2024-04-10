@@ -1,5 +1,8 @@
 using CodingChallengeMM.Server.Data;
-using CodingChallengeMM.Server.Model;
+using CodingChallengeMM.Server.Factories;
+using CodingChallengeMM.Server.Interfaces;
+using CodingChallengeMM.Server.Services;
+using CodingChallengeMM.Server.Strategies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -9,6 +12,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Add services to the container.
 
 builder.Services.AddScoped<IEmailDomainService, EmailDomainService>();
+builder.Services.AddScoped<ILoanProductStrategyFactory, LoanProductStrategyFactory>();
+builder.Services.AddScoped<ProductAStrategy>();
+builder.Services.AddScoped<ProductBStrategy>();
+builder.Services.AddScoped<ProductCStrategy>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;

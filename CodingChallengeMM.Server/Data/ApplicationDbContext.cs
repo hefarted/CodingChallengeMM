@@ -1,7 +1,7 @@
 ﻿
 namespace CodingChallengeMM.Server.Data
 {
-    using CodingChallengeMM.Server.Model;
+    using CodingChallengeMM.Server.Entities;
     using Microsoft.EntityFrameworkCore;
 
     public class ApplicationDbContext : DbContext

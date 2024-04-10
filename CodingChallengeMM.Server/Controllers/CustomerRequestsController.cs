@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
 using CodingChallengeMM.Server.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
+using CodingChallengeMM.Server.Interfaces;
+using CodingChallengeMM.Server.Entities;
 
 namespace CodingChallengeMM.Server.Controllers
 {

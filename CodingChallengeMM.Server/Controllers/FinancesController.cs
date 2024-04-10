@@ -7,17 +7,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
 using CodingChallengeMM.Server.Model;
+using CodingChallengeMM.Server.Entities;
+using CodingChallengeMM.Server.Interfaces;
+using Azure.Core;
 
 namespace CodingChallengeMM.Server.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class FinancesController : ControllerBase
     {
+        private readonly ILoanProductStrategyFactory _strategyFactory;
+
         private readonly ApplicationDbContext _context;
 
-        public FinancesController(ApplicationDbContext context)
+        public FinancesController(ILoanProductStrategyFactory strategyFactory, 
+            ApplicationDbContext context)
         {
+            _strategyFactory = strategyFactory;
             _context = context;
         }
 
@@ -87,8 +95,12 @@ namespace CodingChallengeMM.Server.Controllers
                 return BadRequest(new { Message = "A finance record for this customer request already exists." });
             }
 
+            
             var customerRequest = _context.CustomerRequests
                 .FirstOrDefault(cr => cr.Id == model.CustomerRequestId);
+
+            var strategy = _strategyFactory.GetStrategy(customerRequest.Term);
+
             if (customerRequest == null)
             {
                 return NotFound(new { Message = "Customer request not found." });
