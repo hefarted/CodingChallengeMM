@@ -1,0 +1,118 @@
+mat-card {
+  margin: 20px;
+  padding: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.mat-mdc-card {
+    background-color : #ffffff;
+}
+
+
+.quote-calculator {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.values {
+  display: flex;
+  justify-content: space-between;
+}
+
+.current-value p {
+  font-size: 16px;
+}
+
+
+.quote-card {
+  width: 80%;
+  // Adjust the width as needed // Add any additional styling here
+}
+
+/* Customize other styles as needed */
+.full-width-slider {
+  width: calc(100% - 32px); /* Adjust the value based on the total padding of the card */
+  margin: 0 16px; /* This assumes you have a padding of 16px on both sides of the card */
+}
+
+.mat-slider {
+  width: 100%; /* Ensure internal slider elements also take full width */
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.quote-card {
+  width: 100%; /* Adjust as needed */
+  max-width: 800px; /* Maximum width */
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between; /* This will space out the children */
+  flex-wrap: wrap; /* This will allow items to wrap onto the next line */
+  gap: 20px; /* This adds space between the form fields */
+}
+
+.field {
+  flex-grow: 1; /* Fields will grow to fill available space */
+}
+
+.field-third {
+  flex-basis: calc(5% - 20px); /* Subtracting gap from flex-basis */
+}
+
+.field-expand {
+  flex-basis: calc(20% - 20px); /* Adjust as needed */
+}
+
+.field-half {
+  flex-basis: calc(50% - 20px); /* Each takes up half the space minus the gap */
+}
+
+@media (max-width: 768px) {
+  .field-third,
+  .field-expand,
+  .field-half {
+    flex-basis: 100%; /* On smaller screens, each field takes full width */
+  }
+}
+
+.mat-form-field {
+  width: 100%; /* Make sure form fields take the full width of their container */
+}
+
+
+.calculate-section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.calculate-button {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  font-size: 18px; /* Larger font size */
+  padding: 10px 30px; /* Padding inside the button */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12); /* Material shadow */
+  margin-bottom: 10px; /* Space below the button */
+}
+
+.disclaimer {
+  color: #757575; /* Grey text */
+  font-size: 14px; /* Smaller font size */
+}
+
