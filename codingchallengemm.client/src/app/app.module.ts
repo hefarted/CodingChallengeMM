@@ -9,6 +9,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatCardModule } from '@angular/material/card';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { QuoteRequestModule } from './quote-request/quote-request.module';
 
 @NgModule({
   declarations: [
@@ -16,11 +17,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     QuoteCalculatorComponent
   ],
   imports: [
+    QuoteRequestModule,
     BrowserModule, HttpClientModule,
     AppRoutingModule, 
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+  
   ],
   providers: [
     provideAnimationsAsync()
