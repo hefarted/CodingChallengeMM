@@ -6,13 +6,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
-using CodingChallengeMM.Server.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using CodingChallengeMM.Server.Interfaces;
-using CodingChallengeMM.Server.Entities;
+using CodingChallengeMM.Server.Model.Entities;
+using CodingChallengeMM.Server.Model.Dto;
 
 namespace CodingChallengeMM.Server.Controllers
 {
+    /// <summary>
+    ///  The customer requests controlller.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerRequestsController : ControllerBase
@@ -22,6 +25,11 @@ namespace CodingChallengeMM.Server.Controllers
         private string url = "https://www.google.com/";
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        ///  The customer request controller constructor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="emailDomainService"></param>
         public CustomerRequestsController(ApplicationDbContext context , IEmailDomainService emailDomainService)
         {
             _emailDomainService = emailDomainService;

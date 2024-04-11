@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
-using CodingChallengeMM.Server.Model;
-using CodingChallengeMM.Server.Entities;
 using CodingChallengeMM.Server.Interfaces;
 using Azure.Core;
+using CodingChallengeMM.Server.Model.Entities;
+using CodingChallengeMM.Server.Model.Dto;
+using CodingChallengeMM.Server.Utilities;
 
 namespace CodingChallengeMM.Server.Controllers
 {
@@ -19,12 +20,14 @@ namespace CodingChallengeMM.Server.Controllers
     public class FinancesController : ControllerBase
     {
         private readonly ILoanProductStrategyFactory _strategyFactory;
+        private readonly IMobileNumberBlacklistService _mobileNumberBlacklistService;
 
         private readonly ApplicationDbContext _context;
 
-        public FinancesController(ILoanProductStrategyFactory strategyFactory, 
-            ApplicationDbContext context)
+        public FinancesController(ILoanProductStrategyFactory strategyFactory,
+            IMobileNumberBlacklistService mobileNumberBlacklistService, ApplicationDbContext context)   
         {
+            _mobileNumberBlacklistService = mobileNumberBlacklistService;
             _strategyFactory = strategyFactory;
             _context = context;
         }
@@ -95,11 +98,21 @@ namespace CodingChallengeMM.Server.Controllers
                 return BadRequest(new { Message = "A finance record for this customer request already exists." });
             }
 
-            
             var customerRequest = _context.CustomerRequests
                 .FirstOrDefault(cr => cr.Id == model.CustomerRequestId);
 
-            var strategy = _strategyFactory.GetStrategy(customerRequest.Term);
+            if (!AgeValidator.IsEighteenYearsOld(customerRequest.DateOfBirth))
+            {
+                return BadRequest("The applicant must be at least 18 years old.");
+            }
+
+            if (_mobileNumberBlacklistService.IsBlacklisted(customerRequest.Mobile))
+            {
+                return BadRequest("The mobile number is blacklisted.");
+            }
+            var strategy = _strategyFactory.GetStrategy(model.ProductType);
+            
+            var totalAmount = strategy.CalculateFinanceAmount(customerRequest.AmountRequired , customerRequest.Term);
 
             if (customerRequest == null)
             {
@@ -108,9 +121,7 @@ namespace CodingChallengeMM.Server.Controllers
 
             var finance = new Finance
             {
-                Amount = model.Amount,
-                TermInMonths = model.TermInMonths,
-                RepaymentAmount = model.RepaymentAmount,
+                RepaymentAmount = totalAmount,
                 RepaymentFrequency = model.RepaymentFrequency,
                 CustomerRequestId = model.CustomerRequestId
             };

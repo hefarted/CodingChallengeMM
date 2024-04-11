@@ -1,4 +1,4 @@
-﻿namespace CodingChallengeMM.Server.Entities
+﻿namespace CodingChallengeMM.Server.Model.Entities
 {
     public class BlacklistedDomain
     {

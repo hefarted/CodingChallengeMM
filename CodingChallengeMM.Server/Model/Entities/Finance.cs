@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CodingChallengeMM.Server.Model
+namespace CodingChallengeMM.Server.Model.Entities
 {
-    public class FinanceCreateModel
+
+    public class Finance
     {
-        public decimal Amount { get; set; }
-        public int TermInMonths { get; set; }
+        public int Id { get; set; } // Primary key for the Finance table
         public decimal RepaymentAmount { get; set; }
         public string RepaymentFrequency { get; set; }
 
@@ -13,5 +13,7 @@ namespace CodingChallengeMM.Server.Model
         [ForeignKey("CustomerRequest")]
         public int CustomerRequestId { get; set; }
 
+        public CustomerRequest CustomerRequest { get; set; }
     }
+
 }

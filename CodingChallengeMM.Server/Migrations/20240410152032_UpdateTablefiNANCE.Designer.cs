@@ -4,6 +4,7 @@ using CodingChallengeMM.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingChallengeMM.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240410152032_UpdateTablefiNANCE")]
+    partial class UpdateTablefiNANCE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace CodingChallengeMM.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CodingChallengeMM.Server.Model.Entities.BlacklistedDomain", b =>
+            modelBuilder.Entity("CodingChallengeMM.Server.Entities.BlacklistedDomain", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,24 +45,7 @@ namespace CodingChallengeMM.Server.Migrations
                     b.ToTable("BlacklistedDomains");
                 });
 
-            modelBuilder.Entity("CodingChallengeMM.Server.Model.Entities.BlacklistedNumber", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("MobileNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BlacklistedNumbers");
-                });
-
-            modelBuilder.Entity("CodingChallengeMM.Server.Model.Entities.CustomerRequest", b =>
+            modelBuilder.Entity("CodingChallengeMM.Server.Entities.CustomerRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +95,7 @@ namespace CodingChallengeMM.Server.Migrations
                     b.ToTable("CustomerRequests");
                 });
 
-            modelBuilder.Entity("CodingChallengeMM.Server.Model.Entities.Finance", b =>
+            modelBuilder.Entity("CodingChallengeMM.Server.Entities.Finance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,18 +121,18 @@ namespace CodingChallengeMM.Server.Migrations
                     b.ToTable("Finance");
                 });
 
-            modelBuilder.Entity("CodingChallengeMM.Server.Model.Entities.Finance", b =>
+            modelBuilder.Entity("CodingChallengeMM.Server.Entities.Finance", b =>
                 {
-                    b.HasOne("CodingChallengeMM.Server.Model.Entities.CustomerRequest", "CustomerRequest")
+                    b.HasOne("CodingChallengeMM.Server.Entities.CustomerRequest", "CustomerRequest")
                         .WithOne("FinanceDetails")
-                        .HasForeignKey("CodingChallengeMM.Server.Model.Entities.Finance", "CustomerRequestId")
+                        .HasForeignKey("CodingChallengeMM.Server.Entities.Finance", "CustomerRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CustomerRequest");
                 });
 
-            modelBuilder.Entity("CodingChallengeMM.Server.Model.Entities.CustomerRequest", b =>
+            modelBuilder.Entity("CodingChallengeMM.Server.Entities.CustomerRequest", b =>
                 {
                     b.Navigation("FinanceDetails")
                         .IsRequired();
