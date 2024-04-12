@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSliderChange } from '@angular/material/slider';
 import { ActivatedRoute } from '@angular/router';
@@ -44,7 +44,9 @@ export class QuoteCalculatorComponent {
     financeDetails: null
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) { }
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef) {
+
+  }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -61,7 +63,8 @@ export class QuoteCalculatorComponent {
     this.http.get(apiUrl).subscribe({
       next: (data) => {
         this.userData = data;
-        console.log(data);
+        console.log(this.userData);
+        this.cdr.detectChanges(); //
       },
       error: (error) => console.error('Error:', error)
     });
