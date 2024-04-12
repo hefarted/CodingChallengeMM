@@ -9,6 +9,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\quote-request\" />
-    <Folder Include="src\app\quote-calculator\" />
   </ItemGroup>
 </Project>

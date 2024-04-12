@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QuoteRequestComponent } from './quote-request.component';
-import { QuoteRequestRoutingModule } from './quote-request-routing.module';
+import { QuoteCalculatorComponent } from './quote-calculator.component';
+import { QuoteCalculatorRoutingModule } from './quote-calculator-routing.module';
 import { MaterialModule } from '../material.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,15 +10,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    QuoteRequestComponent
+    QuoteCalculatorComponent
   ],
   imports: [
     CommonModule,
-    QuoteRequestRoutingModule,
+    QuoteCalculatorRoutingModule,
     MaterialModule,
+    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
+    MaterialModule
   ]
 })
-export class QuoteRequestModule { }
+export class QuoteCalculatorModule { }

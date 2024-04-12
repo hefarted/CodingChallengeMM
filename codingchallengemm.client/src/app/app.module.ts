@@ -10,20 +10,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuoteRequestModule } from './quote-request/quote-request.module';
+import { QuoteCalculatorModule } from './quote-calculator/quote-calculator.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    QuoteCalculatorComponent
+    AppComponent
   ],
   imports: [
     QuoteRequestModule,
+    QuoteCalculatorModule,
     BrowserModule, HttpClientModule,
     AppRoutingModule, 
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-  
   ],
   providers: [
     provideAnimationsAsync()

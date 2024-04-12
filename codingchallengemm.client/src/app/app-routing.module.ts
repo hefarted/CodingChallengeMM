@@ -8,6 +8,10 @@ const routes: Routes = [
     loadChildren: () => import('./quote-request/quote-request.module').then(m => m.QuoteRequestModule)
   },
   {
+    path: 'quote-calculator',
+    loadChildren: () => import('./quote-calculator/quote-calculator.module').then(m => m.QuoteCalculatorModule)
+  },
+  {
     path: '',
     redirectTo: '',
     pathMatch: 'full'
