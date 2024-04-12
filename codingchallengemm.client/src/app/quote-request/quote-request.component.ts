@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface CustomerRequest {
   title: string;
@@ -28,22 +29,30 @@ export class QuoteRequestComponent {
     term: 0
   };
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, private router: Router) { }
 
   submitRequestForm() {
-    // The URL of your back-end API
-    const apiUrl = 'https://yourapi.com/api/CustomerRequests';
+    const apiUrl = 'https://localhost:7188/api/CustomerRequests';
 
-    // POST the data to your API
-    this.http.post(apiUrl, this.request).subscribe({
+    this.http.post<any>(apiUrl, this.request).subscribe({
       next: (response) => {
-        // Handle the successful response here
         console.log('Success:', response);
+
+        // Assuming the domain is always the same, extract the path from the URL
+        const path = new URL(response.url).pathname;
+
+        // Use the extracted path for navigation
+        this.router.navigateByUrl(path).then(success => {
+          if (!success) {
+            console.error('Failed to navigate.');
+          }
+        });
       },
       error: (error) => {
-        // Handle errors here, such as displaying an error message
         console.error('Error:', error);
       }
     });
   }
+
 }
