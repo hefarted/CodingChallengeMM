@@ -10,7 +10,7 @@ interface CustomerRequest {
   mobile: string;
   email: string;
   amountRequired: number;
-  term: number;
+  term: number
 }
 @Component({
   selector: 'app-quote-request',
@@ -29,19 +29,21 @@ export class QuoteRequestComponent {
     term: 0
   };
 
+ 
 
+ 
   constructor(private http: HttpClient, private router: Router) { }
 
   submitRequestForm() {
     const apiUrl = 'https://localhost:7188/api/CustomerRequests';
-
+    console.log('request',this.request);
     this.http.post<any>(apiUrl, this.request).subscribe({
       next: (response) => {
         console.log('Success:', response);
 
         // Assuming the domain is always the same, extract the path from the URL
         const path = new URL(response.url).pathname;
-
+        console.log('path',path);
         // Use the extracted path for navigation
         this.router.navigateByUrl(path).then(success => {
           if (!success) {

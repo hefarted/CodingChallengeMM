@@ -58,10 +58,11 @@ export class QuoteCalculatorComponent {
   }
 
   fetchUserData(userId: string) {
-   
-    const apiUrl = `https://localhost:7188/api/CustomerRequests/25`;
+
+    const apiUrl = `https://localhost:7188/api/CustomerRequests/` + userId;
     this.http.get(apiUrl).subscribe({
       next: (data) => {
+        console.log('data', data);
         this.userData = data;
         console.log(this.userData);
         this.cdr.detectChanges(); //
