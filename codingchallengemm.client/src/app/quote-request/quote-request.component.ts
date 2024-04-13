@@ -12,6 +12,7 @@ interface CustomerRequest {
   amountRequired: number;
   term: number
 }
+
 @Component({
   selector: 'app-quote-request',
   templateUrl: './quote-request.component.html',
@@ -29,9 +30,6 @@ export class QuoteRequestComponent {
     term: 0
   };
 
- 
-
- 
   constructor(private http: HttpClient, private router: Router) { }
 
   submitRequestForm() {

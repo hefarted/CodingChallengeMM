@@ -11,6 +11,9 @@ using Azure.Core;
 using CodingChallengeMM.Server.Model.Entities;
 using CodingChallengeMM.Server.Model.Dto;
 using CodingChallengeMM.Server.Utilities;
+using CodingChallengeMM.Server.Model.Responses;
+using CodingChallengeMM.Server.Services;
+using System.Security.Policy;
 
 namespace CodingChallengeMM.Server.Controllers
 {
@@ -86,16 +89,25 @@ namespace CodingChallengeMM.Server.Controllers
 
        
         [HttpPost]
-        public ActionResult<Finance> PostFinance([FromBody] FinanceCreateModel model)
+        public IActionResult PostFinance(FinanceCreateModel model)
         {
             // Validate the existence of the CustomerRequest
             var existingFinance = _context.Finance
                 .FirstOrDefault(f => f.CustomerRequestId == model.CustomerRequestId);
 
+            // Check if email domain is blacklisted
             if (existingFinance != null)
             {
-                // Handle as needed: return an error, update existing record, etc.
-                return BadRequest(new { Message = "A finance record for this customer request already exists." });
+                var errorResponse = new ErrorResponse
+                {
+                    Success = false,
+                    Error = new ErrorDetail
+                    {
+                        Code = "ExistingFinance",
+                        Message = "A finance record for this customer request already exists."
+                    }
+                };
+                return BadRequest(errorResponse);
             }
 
             var customerRequest = _context.CustomerRequests
@@ -103,13 +115,55 @@ namespace CodingChallengeMM.Server.Controllers
 
             if (!AgeValidator.IsEighteenYearsOld(customerRequest.DateOfBirth))
             {
-                return BadRequest("The applicant must be at least 18 years old.");
+                var errorResponse = new ErrorResponse
+                {
+                    Success = false,
+                    Error = new ErrorDetail
+                    {
+                        Code = "ExistingFinance",
+                        Message = "The applicant must be at least 18 years old."
+                    }
+                };
+                return BadRequest(errorResponse);
+        
             }
 
             if (_mobileNumberBlacklistService.IsBlacklisted(customerRequest.Mobile))
             {
-                return BadRequest("The mobile number is blacklisted.");
+                var errorResponse = new ErrorResponse
+                {
+                    Success = false,
+                    Error = new ErrorDetail
+                    {
+                        Code = "MobileBlackListed",
+                        Message = "TThe mobile number is blacklisted."
+                    }
+                };
+                return BadRequest(errorResponse);
             }
+
+            // Validate the existence of the CustomerRequest
+            //var existingFinance = _context.Finance
+            //    .FirstOrDefault(f => f.CustomerRequestId == model.CustomerRequestId);
+
+            //if (existingFinance != null)
+            //{
+            //    // Handle as needed: return an error, update existing record, etc.
+            //    return BadRequest(new { Message = "A finance record for this customer request already exists." });
+            //}
+
+            //var customerRequest = _context.CustomerRequests
+            //    .FirstOrDefault(cr => cr.Id == model.CustomerRequestId);
+
+            //if (!AgeValidator.IsEighteenYearsOld(customerRequest.DateOfBirth))
+            //{
+            //    return BadRequest("The applicant must be at least 18 years old.");
+            //}
+
+            //if (_mobileNumberBlacklistService.IsBlacklisted(customerRequest.Mobile))
+            //{
+            //    return BadRequest("The mobile number is blacklisted.");
+            //}
             var strategy = _strategyFactory.GetStrategy(model.ProductType);
             
             var totalAmount = strategy.CalculateFinanceAmount(customerRequest.AmountRequired , customerRequest.Term);
@@ -129,7 +183,9 @@ namespace CodingChallengeMM.Server.Controllers
             _context.Finance.Add(finance);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetFinance), new { id = finance.Id }, finance);
+            var newUrl = "https://localhost:4200/quote-calculator";
+            return Created(newUrl, new { success = true, id = finance.Id, url = newUrl + "/" + finance.Id });
+
         }
 
 
