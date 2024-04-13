@@ -89,44 +89,6 @@ namespace CodingChallengeMM.Server.Controllers
             return NoContent();
         }
 
-        //// POST: api/CustomerRequests
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public ActionResult<string> PostCustomerRequest(CustomerRequestCreateModel request)
-        //{
-        //    if (_emailDomainService.IsEmailDomainBlacklisted(request.Email))
-        //    {
-        //        return BadRequest(new { Message = "The email's domain is blacklisted and cannot be processed." });
-        //    }
-        //    var existingRequest = _context.CustomerRequests
-        //            .FirstOrDefault(cr => cr.FirstName == request.FirstName && cr.LastName == request.LastName && cr.DateOfBirth == request.DateOfBirth);
-
-        //    if (existingRequest != null)
-        //    {
-        //        return Ok(url);
-        //    }
-
-        //    var customerRequest = new CustomerRequest
-        //    {
-        //        AmountRequired = request.AmountRequired,
-        //        Term = request.Term,
-        //        Title = request.Title,
-        //        FirstName = request.FirstName,
-        //        LastName = request.LastName,
-        //        DateOfBirth = request.DateOfBirth,
-        //        Mobile = request.Mobile,
-        //        Email = request.Email
-        //        // Id is auto-generated, so it's not set here
-        //    };
-
-        //    _context.CustomerRequests.Add(customerRequest);
-        //    _context.SaveChanges();
-
-        //    return Ok(url);
-        //    //return CreatedAtAction("GetCustomerRequest", new { id = customerRequest.Id }, customerRequest);
-        //}
-
-
         [HttpPost]
         public IActionResult PostCustomerRequest(CustomerRequestCreateModel request)
         {
@@ -153,7 +115,8 @@ namespace CodingChallengeMM.Server.Controllers
 
                 if (existingRequest != null)
                 {
-                    var existingUrl = Url.Link("GetCustomerRequest", new { id = existingRequest.Id });
+                    var existingUrl = url + "/" + existingRequest.Id;
+
                     return Ok(new { success = true, id = existingRequest.Id, url = existingUrl });
                 }
 
