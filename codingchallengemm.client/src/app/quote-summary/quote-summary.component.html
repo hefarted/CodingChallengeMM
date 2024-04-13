@@ -1,80 +1,42 @@
-<!--<div class="mat-card-container">
+<div class="mat-card-container">
   <mat-card class="mat-card-custom">
     <mat-card-content>
-      <h2 class="form-header">Request Form</h2>
-      <form (ngSubmit)="submitRequestForm()" #requestForm="ngForm">-->
+      <h2 class="quote-title">Your quote</h2>
 
-        <!-- Input Row for Title, First Name, and Last Name -->
-        <!--<div class="form-row">-->
-          <!-- Title -->
-          <!--<mat-form-field class="form-field">
-            <mat-label>Title</mat-label>
-            <mat-select [(ngModel)]="request.title" name="title" required>
-              <mat-option value="Mr">Mr.</mat-option>
-              <mat-option value="Ms">Ms.</mat-option>
-              <mat-option value="Mrs">Mrs.</mat-option>
-            </mat-select>
-          </mat-form-field>-->
-
-          <!-- First Name -->
-          <!--<mat-form-field class="form-field">
-            <mat-label>First Name</mat-label>
-            <input matInput [(ngModel)]="request.firstName" name="firstName" required>
-          </mat-form-field>-->
-
-          <!-- Last Name -->
-          <!--<mat-form-field class="form-field">
-            <mat-label>Last Name</mat-label>
-            <input matInput [(ngModel)]="request.lastName" name="lastName" required>
-          </mat-form-field>
+      <!-- User Information -->
+      <section class="user-info">
+        <div class="info-header">
+          <span>Your information</span>
+          <button mat-button>Edit</button>
         </div>
+        <!--<p><strong>Name</strong> Wagtest Wagtest</p>
+        <p><strong>Mobile</strong> 0477095252</p>
+        <p><strong>Email</strong> wagtesttest@test.com</p>-->
+      </section>
 
-        <div class="form-row">
-          <mat-form-field class="form-field">
-            <mat-label>Date of Birth</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="request.dateOfBirth" name="dateOfBirth" required>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>-->
+      <!-- Finance Details -->
+      <section class="finance-details">
+        <div class="info-header">
+          <span>Finance details</span>
+          <button mat-button>Edit</button>
+        </div>
+        <p><strong>Finance amount</strong> $5,000 over 24 months</p>
+      </section>
 
-        
-        <!-- Input Row for Email and Mobile -->
-        <!--<div class="form-row">-->
-          <!-- Email -->
-          <!--<mat-form-field class="form-field">
-            <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="request.email" name="email" type="email" required>
-          </mat-form-field>-->
+      <!-- Repayments Section -->
+      <section class="repayments">
+        <p><strong>Repayments from</strong> $56.15 Weekly</p>
+      </section>
 
-          <!-- Mobile -->
-          <!--<mat-form-field class="form-field">
-            <mat-label>Mobile</mat-label>
-            <input matInput [(ngModel)]="request.mobile" name="mobile" type="tel" required>
-          </mat-form-field>
-        </div>-->
+      <!-- Apply Button -->
+      <button mat-raised-button color="primary" class="apply-button">
+        Apply now
+      </button>
 
-        <!-- Input Row for Amount Required and Term -->
-        <!--<div class="form-row">-->
-          <!-- Amount Required -->
-          <!--<mat-form-field class="form-field">
-            <mat-label>Amount Required</mat-label>
-            <input matInput [(ngModel)]="request.amountRequired" name="amountRequired" type="number" required>
-          </mat-form-field>-->
-
-          <!-- Term -->
-          <!--<mat-form-field class="form-field">
-            <mat-label>Term</mat-label>
-            <input matInput [(ngModel)]="request.term" name="term" type="number" required>
-          </mat-form-field>
-        </div>-->
-
-        <!-- Submit Button -->
-        <!--<button type="submit" class="full-width-button" [disabled]="!requestForm.form.valid">Submit</button>
-      </form>
+      <!-- Disclaimer -->
+      <footer class="disclaimer">
+        <p>Total repayments $5,839.60, made up of an establishment fee of $300.00, interest of $539.60. The repayment amount is based on the variables selected, is subject to our assessment and suitability, and other important terms and conditions apply.</p>
+      </footer>
     </mat-card-content>
   </mat-card>
-</div>-->
-
-
-<h1>test</h1>
+</div>
