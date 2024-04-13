@@ -11,14 +11,18 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuoteRequestModule } from './quote-request/quote-request.module';
 import { QuoteCalculatorModule } from './quote-calculator/quote-calculator.module';
+import { QuoteSummaryModule } from './quote-summary/quote-summary.module';
+import { QuoteSummaryComponent } from './quote-summary/quote-summary.component';
 
 @NgModule({
   declarations: [
     AppComponent
+  
   ],
   imports: [
     QuoteRequestModule,
     QuoteCalculatorModule,
+    QuoteSummaryModule,
     BrowserModule, HttpClientModule,
     AppRoutingModule, 
     FormsModule,

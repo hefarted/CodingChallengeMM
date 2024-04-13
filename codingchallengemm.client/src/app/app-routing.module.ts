@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./quote-calculator/quote-calculator.module').then(m => m.QuoteCalculatorModule)
   },
   {
+    path: 'quote-summary',
+    loadChildren: () => import('./quote-summary/quote-summary.module').then(m => m.QuoteSummaryModule)
+  },
+  {
     path: '',
     redirectTo: '',
     pathMatch: 'full'

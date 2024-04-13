@@ -6,8 +6,6 @@ import { MaterialModule } from '../material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [
     QuoteCalculatorComponent
