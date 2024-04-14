@@ -33,7 +33,28 @@ Before setting up the project, ensure you have met the following requirements:
 
 Clone the repository to your local machine:
 
+
+
+## Usage Examples
+
+### Database Setup
+1. **Create Database**:
+   To initialize the system, ensure you have an SQL Server instance. First, create a database named `MoneyMeCodingChallenge` using SQL Server Management Studio (SSMS)
+
 ```bash
 git clone https://github.com/hefarted/CodingChallengeMM.git
 dotnet restore
 npm install
+```
+```  sql
+   CREATE DATABASE MoneyMeCodingChallenge;
+```
+2. **Configure Connection String**:
+Update the appsettings.json in your project to include the correct connection string pointing to your SQL Server:
+
+```
+"ConnectionStrings": {
+  "DefaultConnection": "Server=localhost\\MSSQLSERVER07;Database=MoneyMeCodingChallenge;Trusted_Connection=True;TrustServerCertificate=True;"
+}
+```
+
