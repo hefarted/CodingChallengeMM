@@ -24,7 +24,7 @@
 
       <!-- Repayments Section -->
       <section class="repayments">
-        <p><strong>Repayments from:</strong> {{ finance.repaymentAmount | currency }} {{ finance.repaymentFrequency }}</p>
+        <p><strong>Repayments from:</strong> {{ finance.repaymentAmount | currency }} {{ finance.repaymentFrequency }} </p>
       </section>
 
       <!-- Apply Button -->
@@ -34,8 +34,9 @@
 
       <!-- Disclaimer -->
       <footer class="disclaimer">
-        <p>Total repayments $5,839.60, made up of an establishment fee of $300.00, interest of $539.60. The repayment amount is based on the variables selected, is subject to our assessment and suitability, and other important terms and conditions apply.</p>
+        <p>Total repayments ${{ finance.repaymentAmount | currency:'USD' }}, made up of an establishment fee of <!--${{ finance.establishmentFee | currency:'USD' }}-->, interest of <!--${{ finance.interest | currency:'USD' }}-->. The repayment amount is based on the variables selected, is subject to our assessment and suitability, and other important terms and conditions apply.</p>
       </footer>
+
     </mat-card-content>
   </mat-card>
 </div>
