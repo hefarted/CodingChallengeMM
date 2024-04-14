@@ -10,8 +10,8 @@ The Loan Management System is an ASP.NET Web API designed to facilitate the proc
 - **Data Validation**: Includes validation for age, blacklist status of mobile numbers and email domains.
 - **Dynamic User Interface**: Features dynamic form elements like sliders and dropdowns to enhance user experience.
 - **Automatic Calculations**: Utilizes a PMT-like function to calculate repayment amounts.
-- **Editable Entries**: Users can edit their data before final submission.
-- **Robust Security**: Ensures that only eligible applications are processed.
+- **Editable Entries**: Users can edit their data before final submission. (Todo)
+- **Robust Security**: Ensures that only eligible applications are processed. (Todo)
 
 ## Prerequisites
 
