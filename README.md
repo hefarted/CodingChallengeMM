@@ -50,11 +50,45 @@ npm install
    CREATE DATABASE MoneyMeCodingChallenge;
 ```
 2. **Configure Connection String**:
-Update the appsettings.json in your project to include the correct connection string pointing to your SQL Server:
+   Update the appsettings.json in your project to include the correct connection string pointing to your SQL Server:
 
 ```
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost\\MSSQLSERVER07;Database=MoneyMeCodingChallenge;Trusted_Connection=True;TrustServerCertificate=True;"
 }
 ```
+Adjust the server name and other parameters as necessary to match your SQL Server configuration.
+
+3. **Apply Entity Framework Migrations**:
+   Navigate to the directory of your .NET Core API project that contains the Startup.cs file. Use Entity Framework Core to set up and update your database schema:
+```
+dotnet restore
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+   These commands install any missing dependencies, create necessary migration scripts, and apply these migrations to update the database.
+
+## Running the Application
+
+### Backend API with Visual Studio Code
+
+**Open the Backend Project**:
+   Launch Visual Studio Code and open the backend project folder.
+   
+   Click on the green play button in the top-right corner or press F5 to start debugging. This action will run the API project and listen for incoming requests.
+
+## Testing Procedures
+
+To ensure the reliability of the application, a suite of tests has been written using xUnit. These tests cover both unit and integration test cases. Follow the instructions below to run the tests:
+
+1. **Open the Test Project**:
+   Open the folder that contains your xUnit test project in Visual Studio Code or your preferred IDE.
+
+2. **Restore Test Dependencies**:
+   In the integrated terminal, execute the following command to restore all the dependencies required by the test project:
+   
+   ```bash
+   dotnet restore
+ ```
+
 
