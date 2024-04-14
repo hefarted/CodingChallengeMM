@@ -31,10 +31,7 @@ Before setting up the project, ensure you have met the following requirements:
 
 ## Installation
 
-## Installation
-
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/loan-management-system.git
-cd loan-management-system
+git clone https://github.com/hefarted/CodingChallengeMM.git
