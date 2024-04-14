@@ -15,6 +15,13 @@ namespace CodingChallengeMM.Server.Model.Entities
         [ForeignKey("CustomerRequest")]
         public int CustomerRequestId { get; set; }
 
+        public decimal FinanceAmount { get; set; }
+        public int TermMonths { get; set; } // The duration over which the amount is financed
+        public decimal WeeklyRepaymentAmount { get; set; }
+        public decimal TotalRepaymentAmount { get; set; } // Total amount after adding fees and interest
+        public decimal EstablishmentFee { get; set; }
+        public decimal InterestAmount { get; set; } // Total interest amount
+
         public CustomerRequest CustomerRequest { get; set; }
     }
 

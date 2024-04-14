@@ -25,6 +25,23 @@ namespace CodingChallengeMM.Server.Factories
                     throw new ArgumentException($"Unsupported product type: {productType}", nameof(productType));
             }
         }
+
+        // to do.
+        public decimal CalculateWeeklyRepayment(decimal financeAmount, int termMonths, decimal annualInterestRate)
+        {
+            int weeksPerYear = 52;
+            int weeksPerMonth = 4; // Approximate value
+
+            decimal weeklyInterestRate = annualInterestRate / weeksPerYear;
+            int totalPayments = termMonths * weeksPerMonth;
+
+            decimal weeklyRepayment = financeAmount *
+                (weeklyInterestRate *
+            (decimal)Math.Pow((double)(1 + weeklyInterestRate), totalPayments)) /
+            ((decimal)Math.Pow((double)(1 + weeklyInterestRate), totalPayments) - 1);
+
+            return weeklyRepayment;
+        }
     }
 }
 

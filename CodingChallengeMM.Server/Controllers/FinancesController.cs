@@ -145,6 +145,7 @@ namespace CodingChallengeMM.Server.Controllers
             
             var strategy = _strategyFactory.GetStrategy(model.ProductType);
             
+
             var totalAmount = strategy.CalculateFinanceAmount(customerRequest.AmountRequired , customerRequest.Term);
 
             if (customerRequest == null)

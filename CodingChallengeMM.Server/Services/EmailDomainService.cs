@@ -16,10 +16,9 @@ namespace CodingChallengeMM.Server.Services
         public bool IsEmailDomainBlacklisted(string email)
         {
             var domain = email.Split('@').LastOrDefault()?.ToLower();
-            // Ensure the domain variable is not null before proceeding with the query
+          
             if (domain == null) return false;
 
-            // Use ToLower() for case-insensitive comparison
             return _context.BlacklistedDomains.Any(b => b.Domain.ToLower() == domain);
         }
 

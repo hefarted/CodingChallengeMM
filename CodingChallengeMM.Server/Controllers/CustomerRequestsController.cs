@@ -131,7 +131,6 @@ namespace CodingChallengeMM.Server.Controllers
                     DateOfBirth = request.DateOfBirth,
                     Mobile = request.Mobile,
                     Email = request.Email
-                    // Id is auto-generated, so it's not set here
                 };
 
                 _context.CustomerRequests.Add(customerRequest);
