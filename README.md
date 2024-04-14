@@ -35,3 +35,5 @@ Clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/hefarted/CodingChallengeMM.git
+dotnet restore
+npm install
