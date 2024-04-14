@@ -20,6 +20,17 @@ Before you begin, ensure you have met the following requirements:
 - SQL Server (appropriate version for your .NET setup)
 - Visual Studio 2019 or later
 
+## Technical Requirements
+
+Before setting up the project, ensure you have met the following requirements:
+- **.NET Core**: The backend API is built with .NET Core, ensuring cross-platform compatibility. Install the .NET Core SDK appropriate for your development needs.
+- **Angular**: Front-end application built using Angular. Requires Angular CLI, Node.js, and npm for development.
+- **Entity Framework Core**: Used for ORM in the .NET Core API. Ensure necessary packages are included in the project.
+- **Swagger**: Integrated for API documentation and endpoint testing. Set up is required in the project configuration.
+- **SQL Server**: Used as the primary database. Ensure you have access to SQL Server for development and production environments.
+
+## Installation
+
 ## Installation
 
 Clone the repository to your local machine:
