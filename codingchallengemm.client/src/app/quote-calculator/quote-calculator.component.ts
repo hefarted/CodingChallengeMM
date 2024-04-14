@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSliderChange } from '@angular/material/slider';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -53,7 +53,9 @@ export class QuoteCalculatorComponent {
     financeDetails: null
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef) {
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef,
+    private router: Router
+  ) {
 
   }
 
@@ -86,18 +88,24 @@ export class QuoteCalculatorComponent {
     var postData: Finance = {
       customerRequestId: 32,  // Assuming `id` is the customer request ID you need
       repaymentAmount: 5000,  // Example, set based on your form data/logic
-      repaymentFrequency: "6",  // Assuming this is controlled by a form field
+      repaymentFrequency: '6',  // Assuming this is controlled by a form field
       productType: 'ProductB'  // Assuming selectedProduct holds the product type
     };
-
-    
 
     console.log(postData);
     this.http.post<any>(apiUrl, postData).subscribe({
       next: response => {
         console.log('Finance record created:', response);
         // Navigate to success page or display success message
-        //this.router.navigateByUrl(`/success-path/${response.id}`);
+        // Assuming the domain is always the same, extract the path from the URL
+        const path = new URL(response.url).pathname;
+        console.log('path', path);
+        // Use the extracted path for navigation
+        this.router.navigateByUrl(path).then(success => {
+          if (!success) {
+            console.error('Failed to navigate.');
+          }
+        });
       },
       error: error => {
         console.error('Failed to create finance record:', error);

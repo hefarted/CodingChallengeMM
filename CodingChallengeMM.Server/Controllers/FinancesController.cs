@@ -142,28 +142,7 @@ namespace CodingChallengeMM.Server.Controllers
                 return BadRequest(errorResponse);
             }
 
-            // Validate the existence of the CustomerRequest
-            //var existingFinance = _context.Finance
-            //    .FirstOrDefault(f => f.CustomerRequestId == model.CustomerRequestId);
-
-            //if (existingFinance != null)
-            //{
-            //    // Handle as needed: return an error, update existing record, etc.
-            //    return BadRequest(new { Message = "A finance record for this customer request already exists." });
-            //}
-
-            //var customerRequest = _context.CustomerRequests
-            //    .FirstOrDefault(cr => cr.Id == model.CustomerRequestId);
-
-            //if (!AgeValidator.IsEighteenYearsOld(customerRequest.DateOfBirth))
-            //{
-            //    return BadRequest("The applicant must be at least 18 years old.");
-            //}
-
-            //if (_mobileNumberBlacklistService.IsBlacklisted(customerRequest.Mobile))
-            //{
-            //    return BadRequest("The mobile number is blacklisted.");
-            //}
+            
             var strategy = _strategyFactory.GetStrategy(model.ProductType);
             
             var totalAmount = strategy.CalculateFinanceAmount(customerRequest.AmountRequired , customerRequest.Term);
@@ -183,7 +162,7 @@ namespace CodingChallengeMM.Server.Controllers
             _context.Finance.Add(finance);
             _context.SaveChanges();
 
-            var newUrl = "https://localhost:4200/quote-calculator";
+            var newUrl = "https://localhost:4200/quote-summary";
             return Created(newUrl, new { success = true, id = finance.Id, url = newUrl + "/" + finance.Id });
 
         }
