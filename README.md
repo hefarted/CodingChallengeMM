@@ -1,5 +1,13 @@
 # CodingChallengeMM
-
+## Table of Contents
+- [Features](#features)
+- [Technical Requirements](#technical-requirements)
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
+  
 # Loan Management System
 
 The Loan Management System is an ASP.NET Web API designed to facilitate the processing of loan applications. This application allows users to enter personal and financial details, calculates potential loan repayments, and validates user eligibility based on predefined rules. It's built to be consumed by third-party applications, ensuring that after validation, users are redirected to a tailored success page.
