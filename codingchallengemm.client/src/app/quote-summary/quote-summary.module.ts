@@ -5,6 +5,7 @@ import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuoteSummaryRoutingModule } from './quote-summary-routing.module';
 import { QuoteSummaryComponent } from './quote-summary.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 @NgModule({

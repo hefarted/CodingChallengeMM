@@ -3,13 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { QuoteSummaryComponent } from './quote-summary.component';
 
 const routes: Routes = [
-  {
-    path: 'quote-summary', component: QuoteSummaryComponent,
-    children: [
-      { path: '', component: QuoteSummaryComponent }, // Default path
-      { path: ':id', component: QuoteSummaryComponent } // Path with dynamic segment for ID
-    ]
-  }
+  { path: 'quote-summary', component: QuoteSummaryComponent }, // No parameter here for the general case
+  { path: 'quote-summary/:financeId', component: QuoteSummaryComponent } // Path with dynamic segment for ID
 ];
 
 @NgModule({

@@ -23,6 +23,7 @@ import { QuoteSummaryComponent } from './quote-summary/quote-summary.component';
     QuoteRequestModule,
     QuoteCalculatorModule,
     QuoteSummaryModule,
+
     BrowserModule, HttpClientModule,
     AppRoutingModule, 
     FormsModule,

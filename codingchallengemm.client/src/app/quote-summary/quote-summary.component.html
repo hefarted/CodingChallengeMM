@@ -9,23 +9,22 @@
           <span>Your information</span>
           <button mat-button>Edit</button>
         </div>
-        <!--<p><strong>Name</strong> Wagtest Wagtest</p>
-        <p><strong>Mobile</strong> 0477095252</p>
-        <p><strong>Email</strong> wagtesttest@test.com</p>-->
+        <p><strong>Name:</strong> {{ userData.title }} {{ userData.firstName }} {{ userData.lastName }}</p>
+        <p><strong>Mobile:</strong> {{ userData.mobile }}</p>
+        <p><strong>Email:</strong> {{ userData.email }}</p>
       </section>
 
-      <!-- Finance Details -->
       <section class="finance-details">
         <div class="info-header">
           <span>Finance details</span>
           <button mat-button>Edit</button>
         </div>
-        <p><strong>Finance amount</strong> $5,000 over 24 months</p>
+        <p><strong>Finance amount:</strong> {{ finance.repaymentAmount | currency }} over {{ finance.term }} months</p>
       </section>
 
       <!-- Repayments Section -->
       <section class="repayments">
-        <p><strong>Repayments from</strong> $56.15 Weekly</p>
+        <p><strong>Repayments from:</strong> {{ finance.repaymentAmount | currency }} {{ finance.repaymentFrequency }}</p>
       </section>
 
       <!-- Apply Button -->

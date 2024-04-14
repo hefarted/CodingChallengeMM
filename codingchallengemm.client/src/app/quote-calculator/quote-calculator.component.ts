@@ -7,8 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 interface Finance {
   customerRequestId: number;
-  repaymentAmount: number;
-  repaymentFrequency: string;
   productType: string;
 }
 
@@ -38,7 +36,7 @@ export class QuoteCalculatorComponent {
     mobileNumber: string = '';
 
 
-    userId: string | null = null;
+  userId: string | null = null;
  
   userData: any = {
     id: null,
@@ -62,6 +60,7 @@ export class QuoteCalculatorComponent {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
       this.userId = params.get('id');
+      console.log(params);
       if (this.userId) {
         this.fetchUserData(this.userId);
       }
@@ -86,13 +85,11 @@ export class QuoteCalculatorComponent {
     const apiUrl = 'https://localhost:7188/api/Finances';
     // Prepare the POST request payload based on the required JSON structure
     var postData: Finance = {
-      customerRequestId: 32,  // Assuming `id` is the customer request ID you need
-      repaymentAmount: 5000,  // Example, set based on your form data/logic
-      repaymentFrequency: '6',  // Assuming this is controlled by a form field
+      customerRequestId: this.userData.id,  // Assuming this is controlled by a form field
       productType: 'ProductB'  // Assuming selectedProduct holds the product type
     };
 
-    console.log(postData);
+    console.log('post-data', postData);
     this.http.post<any>(apiUrl, postData).subscribe({
       next: response => {
         console.log('Finance record created:', response);
@@ -112,16 +109,7 @@ export class QuoteCalculatorComponent {
         // Handle error, display error message to the user
       }
     });
-    //const apiUrl = `https://localhost:7188/api/CustomerRequests/` + 32;
-    //this.http.get(apiUrl).subscribe({
-    //  next: (data) => {
-    //    console.log('data', data);
-    //    this.userData = data;
-    //    console.log(this.userData);
-    //    this.cdr.detectChanges(); //
-    //  },
-    //  error: (error) => console.error('Error:', error)
-    //});
+    
   }
 
 }

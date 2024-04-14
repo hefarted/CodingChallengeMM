@@ -4,8 +4,6 @@ namespace CodingChallengeMM.Server.Model.Dto
 {
     public class FinanceCreateModel
     {
-        public decimal RepaymentAmount { get; set; }
-        public string RepaymentFrequency { get; set; }
 
         public string ProductType { get; set; }
 

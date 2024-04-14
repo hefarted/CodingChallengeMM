@@ -14,10 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     QuoteCalculatorRoutingModule,
     MaterialModule,
-    AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    MaterialModule
+    ReactiveFormsModule
   ]
 })
 export class QuoteCalculatorModule { }

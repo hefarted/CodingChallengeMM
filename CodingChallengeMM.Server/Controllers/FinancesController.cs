@@ -155,8 +155,9 @@ namespace CodingChallengeMM.Server.Controllers
             var finance = new Finance
             {
                 RepaymentAmount = totalAmount,
-                RepaymentFrequency = model.RepaymentFrequency,
-                CustomerRequestId = model.CustomerRequestId
+                RepaymentFrequency = customerRequest.Term,
+                CustomerRequestId = model.CustomerRequestId,
+                ProductType = model.ProductType
             };
 
             _context.Finance.Add(finance);
