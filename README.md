@@ -77,7 +77,7 @@ dotnet ef database update
    
    Click on the green play button in the top-right corner or press F5 to start debugging. This action will run the API project and listen for incoming requests.
 
-## Testing Procedures
+## Testing Procedures (Not yet implemented)
 
 To ensure the reliability of the application, a suite of tests has been written using xUnit. These tests cover both unit and integration test cases. Follow the instructions below to run the tests:
 
