@@ -1,0 +1,42 @@
+<div class="mat-card-container">
+  <mat-card class="mat-card-custom">
+    <mat-card-content>
+      <h2 class="quote-title">Your quote</h2>
+
+      <!-- User Information -->
+      <section class="user-info">
+        <div class="info-header">
+          <span>Your information</span>
+          <button mat-button>Edit</button>
+        </div>
+        <p><strong>Name:</strong> {{ userData.title }} {{ userData.firstName }} {{ userData.lastName }}</p>
+        <p><strong>Mobile:</strong> {{ userData.mobile }}</p>
+        <p><strong>Email:</strong> {{ userData.email }}</p>
+      </section>
+
+      <section class="finance-details">
+        <div class="info-header">
+          <span>Finance details</span>
+          <button mat-button>Edit</button>
+        </div>
+        <p><strong>Finance amount:</strong> {{ finance.repaymentAmount | currency }} over {{ finance.term }} months</p>
+      </section>
+
+      <!-- Repayments Section -->
+      <section class="repayments">
+        <p><strong>Repayments from:</strong> {{ finance.repaymentAmount | currency }} {{ finance.repaymentFrequency }} </p>
+      </section>
+
+      <!-- Apply Button -->
+      <button mat-raised-button color="primary" class="apply-button">
+        Apply now
+      </button>
+
+      <!-- Disclaimer -->
+      <footer class="disclaimer">
+        <p>Total repayments ${{ finance.repaymentAmount | currency:'USD' }}, made up of an establishment fee of <!--${{ finance.establishmentFee | currency:'USD' }}-->, interest of <!--${{ finance.interest | currency:'USD' }}-->. The repayment amount is based on the variables selected, is subject to our assessment and suitability, and other important terms and conditions apply.</p>
+      </footer>
+
+    </mat-card-content>
+  </mat-card>
+</div>

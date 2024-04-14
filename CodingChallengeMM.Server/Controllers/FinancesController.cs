@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
-using CodingChallengeMM.Server.Model;
-using CodingChallengeMM.Server.Entities;
 using CodingChallengeMM.Server.Interfaces;
 using Azure.Core;
+using CodingChallengeMM.Server.Model.Entities;
+using CodingChallengeMM.Server.Model.Dto;
+using CodingChallengeMM.Server.Utilities;
+using CodingChallengeMM.Server.Model.Responses;
+using CodingChallengeMM.Server.Services;
+using System.Security.Policy;
 
 namespace CodingChallengeMM.Server.Controllers
 {
@@ -19,12 +23,14 @@ namespace CodingChallengeMM.Server.Controllers
     public class FinancesController : ControllerBase
     {
         private readonly ILoanProductStrategyFactory _strategyFactory;
+        private readonly IMobileNumberBlacklistService _mobileNumberBlacklistService;
 
         private readonly ApplicationDbContext _context;
 
-        public FinancesController(ILoanProductStrategyFactory strategyFactory, 
-            ApplicationDbContext context)
+        public FinancesController(ILoanProductStrategyFactory strategyFactory,
+            IMobileNumberBlacklistService mobileNumberBlacklistService, ApplicationDbContext context)   
         {
+            _mobileNumberBlacklistService = mobileNumberBlacklistService;
             _strategyFactory = strategyFactory;
             _context = context;
         }
@@ -83,23 +89,64 @@ namespace CodingChallengeMM.Server.Controllers
 
        
         [HttpPost]
-        public ActionResult<Finance> PostFinance([FromBody] FinanceCreateModel model)
+        public IActionResult PostFinance(FinanceCreateModel model)
         {
             // Validate the existence of the CustomerRequest
             var existingFinance = _context.Finance
                 .FirstOrDefault(f => f.CustomerRequestId == model.CustomerRequestId);
 
+            // Check if email domain is blacklisted
             if (existingFinance != null)
             {
-                // Handle as needed: return an error, update existing record, etc.
-                return BadRequest(new { Message = "A finance record for this customer request already exists." });
+                var errorResponse = new ErrorResponse
+                {
+                    Success = false,
+                    Error = new ErrorDetail
+                    {
+                        Code = "ExistingFinance",
+                        Message = "A finance record for this customer request already exists."
+                    }
+                };
+                return BadRequest(errorResponse);
             }
 
-            
             var customerRequest = _context.CustomerRequests
                 .FirstOrDefault(cr => cr.Id == model.CustomerRequestId);
 
-            var strategy = _strategyFactory.GetStrategy(customerRequest.Term);
+            if (!AgeValidator.IsEighteenYearsOld(customerRequest.DateOfBirth))
+            {
+                var errorResponse = new ErrorResponse
+                {
+                    Success = false,
+                    Error = new ErrorDetail
+                    {
+                        Code = "ExistingFinance",
+                        Message = "The applicant must be at least 18 years old."
+                    }
+                };
+                return BadRequest(errorResponse);
+        
+            }
+
+            if (_mobileNumberBlacklistService.IsBlacklisted(customerRequest.Mobile))
+            {
+                var errorResponse = new ErrorResponse
+                {
+                    Success = false,
+                    Error = new ErrorDetail
+                    {
+                        Code = "MobileBlackListed",
+                        Message = "TThe mobile number is blacklisted."
+                    }
+                };
+                return BadRequest(errorResponse);
+            }
+
+            
+            var strategy = _strategyFactory.GetStrategy(model.ProductType);
+            
+
+            var totalAmount = strategy.CalculateFinanceAmount(customerRequest.AmountRequired , customerRequest.Term);
 
             if (customerRequest == null)
             {
@@ -108,17 +155,18 @@ namespace CodingChallengeMM.Server.Controllers
 
             var finance = new Finance
             {
-                Amount = model.Amount,
-                TermInMonths = model.TermInMonths,
-                RepaymentAmount = model.RepaymentAmount,
-                RepaymentFrequency = model.RepaymentFrequency,
-                CustomerRequestId = model.CustomerRequestId
+                RepaymentAmount = totalAmount,
+                RepaymentFrequency = customerRequest.Term,
+                CustomerRequestId = model.CustomerRequestId,
+                ProductType = model.ProductType
             };
 
             _context.Finance.Add(finance);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetFinance), new { id = finance.Id }, finance);
+            var newUrl = "https://localhost:4200/quote-summary";
+            return Created(newUrl, new { success = true, id = finance.Id, url = newUrl + "/" + finance.Id });
+
         }
 
 

@@ -6,22 +6,31 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CodingChallengeMM.Server.Data;
-using CodingChallengeMM.Server.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using CodingChallengeMM.Server.Interfaces;
-using CodingChallengeMM.Server.Entities;
+using CodingChallengeMM.Server.Model.Entities;
+using CodingChallengeMM.Server.Model.Dto;
+using CodingChallengeMM.Server.Model.Responses;
 
 namespace CodingChallengeMM.Server.Controllers
 {
+    /// <summary>
+    ///  The customer requests controlller.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerRequestsController : ControllerBase
     {
 
         private readonly IEmailDomainService _emailDomainService;
-        private string url = "https://www.google.com/";
+        public readonly string url = "https://localhost:4200/quote-calculator";
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        ///  The customer request controller constructor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="emailDomainService"></param>
         public CustomerRequestsController(ApplicationDbContext context , IEmailDomainService emailDomainService)
         {
             _emailDomainService = emailDomainService;
@@ -80,42 +89,72 @@ namespace CodingChallengeMM.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/CustomerRequests
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public ActionResult<string> PostCustomerRequest(CustomerRequestCreateModel request)
+        public IActionResult PostCustomerRequest(CustomerRequestCreateModel request)
         {
-            if (_emailDomainService.IsEmailDomainBlacklisted(request.Email))
+            try
             {
-                return BadRequest(new { Message = "The email's domain is blacklisted and cannot be processed." });
-            }
-            var existingRequest = _context.CustomerRequests
+                // Check if email domain is blacklisted
+                if (_emailDomainService.IsEmailDomainBlacklisted(request.Email))
+                {
+                    var errorResponse = new ErrorResponse
+                    {
+                        Success = false,
+                        Error = new ErrorDetail
+                        {
+                            Code = "EmailDomainBlacklisted",
+                            Message = "The email's domain is blacklisted and cannot be processed."
+                        }
+                    };
+                    return BadRequest(errorResponse);
+                }
+
+                // Check if a similar request already exists
+                var existingRequest = _context.CustomerRequests
                     .FirstOrDefault(cr => cr.FirstName == request.FirstName && cr.LastName == request.LastName && cr.DateOfBirth == request.DateOfBirth);
 
-            if (existingRequest != null)
-            {
-                return Ok(url);
+                if (existingRequest != null)
+                {
+                    var existingUrl = url + "/" + existingRequest.Id;
+
+                    return Ok(new { success = true, id = existingRequest.Id, url = existingUrl });
+                }
+
+                // Create a new customer request
+                var customerRequest = new CustomerRequest
+                {
+                    AmountRequired = request.AmountRequired,
+                    Term = request.Term,
+                    Title = request.Title,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    DateOfBirth = request.DateOfBirth,
+                    Mobile = request.Mobile,
+                    Email = request.Email
+                };
+
+                _context.CustomerRequests.Add(customerRequest);
+                _context.SaveChanges();
+
+                var newUrl = url;
+                return Created(newUrl, new { success = true, id = customerRequest.Id, url = newUrl+"/"+customerRequest.Id });
             }
-
-            var customerRequest = new CustomerRequest
+            catch (Exception ex)
             {
-                AmountRequired = request.AmountRequired,
-                Term = request.Term,
-                Title = request.Title,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                DateOfBirth = request.DateOfBirth,
-                Mobile = request.Mobile,
-                Email = request.Email
-                // Id is auto-generated, so it's not set here
-            };
-           
-            _context.CustomerRequests.Add(customerRequest);
-            _context.SaveChanges();
-
-            return Ok(url);
-            //return CreatedAtAction("GetCustomerRequest", new { id = customerRequest.Id }, customerRequest);
+                // Log the exception and return an internal server error response
+                var internalServerErrorResponse = new ErrorResponse
+                {
+                    Success = false,
+                    Error = new ErrorDetail
+                    {
+                        Code = "InternalServerError",
+                        Message = "An unexpected error occurred. Please try again later."
+                    }
+                };
+                return StatusCode(StatusCodes.Status500InternalServerError, internalServerErrorResponse);
+            }
         }
+
 
         // DELETE: api/CustomerRequests/5
         [HttpDelete("{id}")]

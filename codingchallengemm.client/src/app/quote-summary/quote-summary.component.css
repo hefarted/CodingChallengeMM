@@ -1,0 +1,52 @@
+.mat-card-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.mat-card-custom {
+  width: 100%;
+  max-width: 500px;
+}
+
+.quote-title {
+  font-size: 24px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.user-info, .finance-details, .repayments {
+  margin-bottom: 20px;
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+  .info-header span {
+    font-weight: bold;
+    color: #333;
+  }
+
+.apply-button {
+  background-color: #4CAF50;
+  color: white;
+  width: 100%;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.disclaimer {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Add more styles as necessary */
